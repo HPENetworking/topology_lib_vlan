@@ -116,5 +116,5 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
 
 __all__ = [
     'install_vlan_packet', 'load_8021q_module', 'enable_ip_forward',
-    'add_vlan'
+    'add_vlan', 'add_ip_address_vlan'
 ]
