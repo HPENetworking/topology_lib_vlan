@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# vlan Communication Library for Topology documentation build configuration file.
+# VLAN Communication Library for Topology documentation build
+# configuration file.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.

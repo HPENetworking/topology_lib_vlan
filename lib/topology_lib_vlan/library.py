@@ -22,35 +22,99 @@ topology_lib_vlan communication library implementation.
 from __future__ import unicode_literals, absolute_import
 from __future__ import print_function, division
 
-# Add your library functions here.
+
+CONFIG_FILE_SYSCTL = '/etc/sysctl.conf'
 
 
-def your_function_here(enode, your_param, shell=None):
+def install_vlan_packet(enode):
     """
-    Document your function here.
+    Install the vlan packet in host machine.
 
-    :param topology.platforms.base.BaseNode enode: Engine node to communicate
-     with.
-    :param bool your_param: This is an example parameter, read the comment
-     below.
-    :param str shell: Shell name to execute commands.
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
     """
-    pass
 
-    # Usually, the library functions use the parameters to build a command that
-    # is to be sent to the enode, for example:
-    #
-    # command = 'echo "something"'
-    # if your_param:
-    #     command = '{command} "and something else"'.format(command=command)
-    #
-    # Then, the enode is used to send the command:
-    #
-    # enode('the command to be sent', shell=shell)
+    cmd = 'apt-get install vlan'
+    install_vlan_packet_re = enode(cmd, shell='bash')
+
+    assert 'done' in install_vlan_packet_re
+
+
+def load_8021q_module(enode):
+    """
+    Load 8021q kernel module.
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    """
+
+    cmd = 'modprobe 8021q'
+    load_8021q_module_re = enode(cmd, shell='bash')
+
+    assert 'done' in load_8021q_module_re
+
+
+def enable_ip_forward(enode):
+    """
+    Enable packet forwarding for IPv4
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    """
+
+    cmd = 'echo "net.ipv4.ip_forward=1" >> {file}'.format(
+        file=CONFIG_FILE_SYSCTL
+    )
+    enable_ip_forward_re = enode(cmd, shell='bash')
+
+    assert 'done' in enable_ip_forward_re
+
+
+def add_vlan(enode, interface, vlan_id):
+    """
+    Creates a vlan-device on specific interface
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    :param str interface: Interface which vlan will be added
+    :param int vlan_id: VLAN ID that will be added to interface
+    """
+
+    assert interface
+    assert vlan_id
+
+    cmd = 'vconfig add {interface} {vlan_id}'.format(
+            interface=interface, vlan_id=vlan_id
+    )
+    add_vlan_re = enode(cmd, shell='bash')
+
+    assert 'done' in add_vlan_re
+
+
+def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
+    """
+    Add an ip address to vlan interface
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    :param str ip_address: IP addresses that will be added to vlan.
+        Format A.B.C.D/M
+    :param str interface: Interface which vlan will be added
+    :param int vlan_id: VLAN ID that will be added to interface
+    """
+
+    assert interface
+    assert vlan_id
+
+    cmd = 'ip addr add {ip_address} dev {interface}.{vlan_id}'.format(
+            ip_address=ip_address, interface=interface, vlan_id=vlan_id
+    )
+    add_ip_address_vlan_re = enode(cmd, shell='bash')
+
+    assert 'done' in add_ip_address_vlan_re
+
 
 __all__ = [
-    # The Topology framework loads the functions that are in this list to be
-    # used as libraries, so, if you want your function to be loaded, add it
-    # here.
-    'your_function_here'
+    'install_vlan_packet', 'load_8021q_module', 'enable_ip_forward',
+    'add_vlan'
 ]
