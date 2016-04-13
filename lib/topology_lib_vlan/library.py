@@ -37,7 +37,7 @@ def install_vlan_packet(enode):
     cmd = 'apt-get install vlan'
     install_vlan_packet_re = enode(cmd, shell='bash')
 
-    assert 'done' in install_vlan_packet_re
+    assert 'Setting up vlan' in install_vlan_packet_re
 
 
 def load_8021q_module(enode):
@@ -49,9 +49,7 @@ def load_8021q_module(enode):
     """
 
     cmd = 'modprobe 8021q'
-    load_8021q_module_re = enode(cmd, shell='bash')
-
-    assert 'done' in load_8021q_module_re
+    enode(cmd, shell='bash')
 
 
 def enable_ip_forward(enode):
@@ -65,9 +63,7 @@ def enable_ip_forward(enode):
     cmd = 'echo "net.ipv4.ip_forward=1" >> {file}'.format(
         file=CONFIG_FILE_SYSCTL
     )
-    enable_ip_forward_re = enode(cmd, shell='bash')
-
-    assert 'done' in enable_ip_forward_re
+    enode(cmd, shell='bash')
 
 
 def add_vlan(enode, interface, vlan_id):
