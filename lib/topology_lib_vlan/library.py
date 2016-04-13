@@ -106,9 +106,7 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
     cmd = 'ip addr add {ip_address} dev {interface}.{vlan_id}'.format(
             ip_address=ip_address, interface=interface, vlan_id=str(vlan_id)
     )
-    add_ip_address_vlan_re = enode(cmd, shell='bash')
-
-    assert 'done' in add_ip_address_vlan_re
+    enode(cmd, shell='bash')
 
 
 __all__ = [
