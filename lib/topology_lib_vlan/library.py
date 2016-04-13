@@ -84,7 +84,8 @@ def add_vlan(enode, interface, vlan_id):
     )
     add_vlan_re = enode(cmd, shell='bash')
 
-    assert 'done' in add_vlan_re
+    assert 'Added VLAN with VID == {vlan_id} to IF -:{interface}:-'.format(
+        vlan_id=str(vlan_id), interface=interface) in add_vlan_re
 
 
 def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
