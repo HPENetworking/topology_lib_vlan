@@ -84,7 +84,7 @@ def add_vlan(enode, interface, vlan_id):
     assert vlan_id
 
     cmd = 'vconfig add {interface} {vlan_id}'.format(
-            interface=interface, vlan_id=vlan_id
+            interface=interface, vlan_id=str(vlan_id)
     )
     add_vlan_re = enode(cmd, shell='bash')
 
@@ -107,7 +107,7 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
     assert vlan_id
 
     cmd = 'ip addr add {ip_address} dev {interface}.{vlan_id}'.format(
-            ip_address=ip_address, interface=interface, vlan_id=vlan_id
+            ip_address=ip_address, interface=interface, vlan_id=str(vlan_id)
     )
     add_ip_address_vlan_re = enode(cmd, shell='bash')
 
