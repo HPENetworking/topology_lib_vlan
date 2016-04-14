@@ -100,6 +100,7 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
     :param int vlan_id: VLAN ID that will be added to interface
     """
 
+    assert ip_address
     assert interface
     assert vlan_id
 
