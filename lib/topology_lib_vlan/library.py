@@ -87,6 +87,27 @@ def add_vlan(enode, interface, vlan_id):
     assert 'Added VLAN with VID == {vlan_id} to IF -:{interface}:-'.format(
         vlan_id=str(vlan_id), interface=interface) in add_vlan_re
 
+def remove_vlan(enode, interface, vlan_id):
+    """
+    Deletes a vlan-device on specific interface
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    :param str interface: Interface which vlan will be deleted
+    :param int vlan_id: VLAN ID that will be deleted
+    """
+
+    assert interface
+    assert vlan_id
+
+    cmd = 'vconfig rem {interface} {vlan_id}'.format(
+            interface=interface, vlan_id=str(vlan_id)
+    )
+    add_vlan_re = enode(cmd, shell='bash')
+
+    assert 'Deleted VLAN with VID == {vlan_id} to IF -:{interface}:-'.format(
+        vlan_id=str(vlan_id), interface=interface) in add_vlan_re
+
 
 def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
     """
@@ -112,5 +133,5 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
 
 __all__ = [
     'install_vlan_packet', 'load_8021q_module', 'enable_ip_forward',
-    'add_vlan', 'add_ip_address_vlan'
+    'add_vlan', 'add_ip_address_vlan', 'remove_vlan'
 ]
