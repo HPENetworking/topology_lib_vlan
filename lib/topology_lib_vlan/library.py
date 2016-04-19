@@ -103,7 +103,6 @@ def remove_vlan(enode, interface, vlan_id):
     cmd = 'vconfig rem {interface}.{vlan_id}'.format(
             interface=interface, vlan_id=str(vlan_id)
     )
-    print(cmd)
     rem_vlan_re = enode(cmd, shell='bash')
 
     assert 'Removed VLAN -:{interface}.{vlan_id}:-'.format(
