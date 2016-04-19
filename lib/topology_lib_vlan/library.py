@@ -104,10 +104,10 @@ def remove_vlan(enode, interface, vlan_id):
             interface=interface, vlan_id=str(vlan_id)
     )
     print(cmd)
-    add_vlan_re = enode(cmd, shell='bash')
+    rem_vlan_re = enode(cmd, shell='bash')
 
     assert 'Deleted VLAN with VID == {vlan_id} to IF -:{interface}:-'.format(
-        vlan_id=str(vlan_id), interface=interface) in add_vlan_re
+        vlan_id=str(vlan_id), interface=interface) in rem_vlan_re
 
 
 def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
