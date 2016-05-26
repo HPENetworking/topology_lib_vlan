@@ -9,7 +9,7 @@ implement vlans in a linux workstation NIC interface
 Documentation
 =============
 
-    https://github.com/coghiher/topology_lib_vlan.git/tree/master/doc
+    https://github.com/HPENetworking/topology_lib_vlan/tree/master/doc
 
 
 License
