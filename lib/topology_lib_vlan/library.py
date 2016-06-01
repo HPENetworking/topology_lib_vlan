@@ -110,6 +110,25 @@ def remove_vlan(enode, interface, vlan_id):
         vlan_id=str(vlan_id), interface=interface) in rem_vlan_re
 
 
+def link_set_up(enode, interface, vlan_id):
+    """
+    Start the new interface
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    :param str interface: Interface which vlan will be enabled
+    :param int vlan_id: VLAN ID that will be added to interface
+    """
+
+    assert interface
+    assert vlan_id
+
+    cmd = 'ip link set up {interface}.{vlan_id}'.format(
+            interface=interface, vlan_id=str(vlan_id)
+    )
+    enode(cmd, shell='bash')
+
+
 def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
     """
     Add an ip address to vlan interface
@@ -131,24 +150,7 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
     )
     enode(cmd, shell='bash')
 
-
-def link_set_up(enode, interface, vlan_id):
-    """
-    Start the new interface
-
-    :param enode: Engine node to communicate with.
-    :type enode: topology.platforms.base.BaseNode
-    :param str interface: Interface which vlan will be enabled
-    :param int vlan_id: VLAN ID that will be added to interface
-    """
-
-    assert interface
-    assert vlan_id
-
-    cmd = 'ip link set up {interface}.{vlan_id}'.format(
-            interface=interface, vlan_id=str(vlan_id)
-    )
-    enode(cmd, shell='bash')
+    link_set_up(enode, interface, vlan_id)
 
 
 __all__ = [
