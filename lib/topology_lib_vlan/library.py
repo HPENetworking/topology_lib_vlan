@@ -26,6 +26,20 @@ from __future__ import print_function, division
 CONFIG_FILE_SYSCTL = '/etc/sysctl.conf'
 
 
+def update_packet_list(enode):
+    """
+    Resynchronize the package index files from their sources in host machine.
+
+    :param enode: Engine node to communicate with.
+    :type enode: topology.platforms.base.BaseNode
+    """
+
+    cmd = 'apt-get update'
+    update_packet_re = enode(cmd, shell='bash')
+
+    assert 'Done' in update_packet_re
+
+
 def install_vlan_packet(enode):
     """
     Install the vlan packet in host machine.
@@ -33,6 +47,8 @@ def install_vlan_packet(enode):
     :param enode: Engine node to communicate with.
     :type enode: topology.platforms.base.BaseNode
     """
+
+    update_packet_list(enode)
 
     cmd = 'apt-get install vlan'
     install_vlan_packet_re = enode(cmd, shell='bash')
@@ -154,6 +170,7 @@ def add_ip_address_vlan(enode, ip_address, interface, vlan_id):
 
 
 __all__ = [
-    'install_vlan_packet', 'load_8021q_module', 'enable_ip_forward',
-    'add_vlan', 'add_ip_address_vlan', 'remove_vlan', 'link_set_up'
+    'update_packet_list', 'install_vlan_packet', 'load_8021q_module',
+    'enable_ip_forward', 'add_vlan', 'add_ip_address_vlan', 'remove_vlan',
+    'link_set_up'
 ]
