@@ -34,6 +34,9 @@ def update_packet_list(enode):
     :type enode: topology.platforms.base.BaseNode
     """
 
+    cmd = 'rm /var/lib/apt/lists/* -vf'
+    enode(cmd, shell='bash')
+
     cmd = 'apt-get update'
     update_packet_re = enode(cmd, shell='bash')
 
