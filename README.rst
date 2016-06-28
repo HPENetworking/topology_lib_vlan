@@ -12,6 +12,26 @@ Documentation
     https://github.com/HPENetworking/topology_lib_vlan/tree/master/doc
 
 
+Changelog
+=========
+
+0.2.0
+-----
+
+**New**
+
+- Added support for low-level shell API on each function
+- Added function to resynchronize the package index files from their
+  sources in host machine.
+
+
+0.1.0
+-----
+
+**New**
+- Initial release.
+
+
 License
 =======
 
